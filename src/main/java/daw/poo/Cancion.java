@@ -18,6 +18,8 @@ public class Cancion {
     }
 
     public Cancion() {
+        this.titulo="";
+        this.autor="";
     }
 
     public String getTitulo() {
@@ -38,7 +40,7 @@ public class Cancion {
 
     @Override
     public String toString() {
-        return "Cancion{" + "titulo=" + titulo + ", autor=" + autor + '}';
+        return " El titulo de la cancion es" + titulo + "de autor=" + autor ;
     }
     
     

@@ -11,15 +11,10 @@ package daw.poo;
 public class Empleado {
 
     //Attributos
-    private String nombre;
-    private String apellidos;
-    private String NIF;
-    private double sueldoBase;
-    private double pagoHorasExtras;
-    private double horasExtraMes;
-    private int IRPF;//condicion
+    private String nombre, apellidos, nif;
+    private double sueldoBase, pagoHorasExtras, horasExtraMes;//horasExtra entre 10 y 25
+    private int IRPF, numeroHijos;//condicion
     private boolean casado;//o no 
-    private int numeroHijos;
 
     //constrector por defecto
     public Empleado() {
@@ -30,15 +25,15 @@ public class Empleado {
             double pagoHorasExtras, double horasExtraMes, int IRPF, boolean casado, int numeroHijos) {
         this.nombre = nombre;
         this.apellidos = apellidos;
-        this.NIF = NIF;
+        this.nif = NIF;
         this.sueldoBase = sueldoBase;
+        if (pagoHorasExtras < 10 || pagoHorasExtras > 25) {
+            throw new IllegalArgumentException("Pago por horas extras fuera del rango");
+        }
         this.pagoHorasExtras = pagoHorasExtras;
         this.horasExtraMes = horasExtraMes;
-        if (IRPF > 20) {
-            this.IRPF = 20;
-        } else if (IRPF < 1) {
-            this.IRPF = 1;
-        } else {
+        this.IRPF = 20;
+        if (IRPF > 1 && IRPF < 20) {
             this.IRPF = IRPF;
         }
         this.casado = casado;
@@ -63,11 +58,11 @@ public class Empleado {
     }
 
     public String getNIF() {
-        return NIF;
+        return nif;
     }
 
     public void setNIF(String NIF) {
-        this.NIF = NIF;
+        this.nif = NIF;
     }
 
     public double getSueldoBase() {
@@ -83,6 +78,9 @@ public class Empleado {
     }
 
     public void setPagoHorasExtras(double pagoHorasExtras) {
+        if (this.pagoHorasExtras < 10 || this.pagoHorasExtras > 25) {
+            throw new IllegalArgumentException("Pago por horas extras fuera del rango");
+        }
         this.pagoHorasExtras = pagoHorasExtras;
     }
 
@@ -99,16 +97,13 @@ public class Empleado {
     }
 
     public void setIRPF(int IRPF) {
-        if (IRPF > 20) {
-            this.IRPF = 20;
-        } else if (IRPF < 1) {
-            this.IRPF = 1;
-        } else {
+        this.IRPF = 20;
+        if (IRPF > 1 && IRPF < 20) {//si el IRPF no es dentro del rango su valor es 20 por defecto
             this.IRPF = IRPF;
         }
     }
 
-    public boolean isCasado() {   
+    public boolean isCasado() {
         return casado;
     }
 
@@ -128,35 +123,35 @@ public class Empleado {
     @Override
     public String toString() {
         return "Empleado{" + "nombre=" + nombre + ", apellidos=" + apellidos
-                + ", NIF=" + NIF + ", sueldoBase=" + sueldoBase
+                + ", NIF=" + nif + ", sueldoBase=" + sueldoBase
                 + ", pagoHorasExtras=" + pagoHorasExtras + ", horasExtraMes=" + horasExtraMes
                 + ", IRPF=" + IRPF + ", casado=" + casado + ", numeroHijos=" + numeroHijos + '}';
     }
 
     //metodos
     public double complementoHorasExtras() {
-
         return this.getHorasExtraMes() * this.getPagoHorasExtras();
-
     }
 
     public double CalculoSueldoBruto() {
-        return sueldoBase * complementoHorasExtras();
+        return sueldoBase + complementoHorasExtras();
     }
 
     public double CalculoIRPF() {
-        double resultado = 0;
-
+        double irpf = 0;
         //
         if (this.getNumeroHijos() > 0) {
-            resultado = ((getIRPF() * CalculoSueldoBruto() / 100) - getNumeroHijos());
-            if (this.isCasado()) {
-                resultado = resultado - 2;
-            }
-        } else {
-            resultado = getIRPF() * CalculoSueldoBruto() / 100;
+            irpf = (this.getIRPF() - this.getNumeroHijos());
+        } else if (this.isCasado()) {
+            irpf -= 2;
         }
-        return resultado;
+        else{ 
+             if(this.isCasado()) {
+                 irpf -= 2;
+             }
+        }
+        
+        return ((irpf*CalculoSueldoBruto())/100);
 
     }
 
@@ -166,12 +161,12 @@ public class Empleado {
 
     public void escribirBasicInfo() {
         String casado;
-        if(this.isCasado()){
-            casado="Casado";
-        }else {
-            casado="no Casado";
+        if (this.isCasado()) {
+            casado = "Casado";
+        } else {
+            casado = "no Casado";
         }
-        
+
         System.out.println("-----Info Basica--------"
                 + "\n  El nombre es: " + this.getNombre()
                 + "\n  apellidos: " + this.getApellidos()
@@ -188,6 +183,7 @@ public class Empleado {
                 + "\n sueldo base : " + this.getSueldoBase()
                 + "\n complemento por horas extra: " + this.complementoHorasExtras()
                 + "\n el sueldo bruto: " + this.CalculoSueldoBruto()
-                + "\n IRPF: " + this.CalculoIRPF() + "\n el sueldo neto:" + this.sueldoNeto());
+                + "\n IRPF: " + this.CalculoIRPF() 
+                + "\n el sueldo neto:" + this.sueldoNeto());
     }
 }
