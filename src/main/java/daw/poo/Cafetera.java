@@ -28,8 +28,9 @@ public class Cafetera {
     }
 
     public Cafetera(double capacidadMaxima, double cantidadActual) {
-        if(cantidadActual>this.capacidadMaxima){
-            this.cantidadActual=this.capacidadMaxima;
+        if(cantidadActual>capacidadMaxima){
+            this.cantidadActual=capacidadMaxima;
+            this.capacidadMaxima=capacidadMaxima;
         }
     }
     
@@ -38,9 +39,12 @@ public class Cafetera {
     }
     
     public void servirTaza(double cantidadAServir){
-        if(cantidadAServir>this.cantidadActual){
+        if(cantidadAServir>this.cantidadActual){// servir cantidadActual si cntServir > cantidad actual
             cantidadAServir=this.cantidadActual;
-            this.cantidadActual=0;
+            vaciarCafetera();
+        }else if(this.cantidadActual==0){
+           llenarCafetera();// si la cafetera vacia llenarla
+           this.cantidadActual-=cantidadAServir;
         }else{
             this.cantidadActual-=cantidadAServir;
         }
@@ -79,7 +83,7 @@ public class Cafetera {
 
     @Override
     public String toString() {
-        return  "capacidadMaxima de Cafeteria es: " + capacidadMaxima + "y cantidadActual es: " + cantidadActual ;
+        return  "capacidad Maxima de Cafeteria es: " + capacidadMaxima + " y cantidadActual es: " + cantidadActual ;
     }
     
 }
