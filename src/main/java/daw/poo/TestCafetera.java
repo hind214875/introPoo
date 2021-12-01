@@ -11,7 +11,7 @@ package daw.poo;
  */
 public class TestCafetera {
     public static void main(String[] args) {
-        Cafetera c1=new Cafetera(100,300);
+       Cafetera c1=new Cafetera(100,300);
 //        c1.llenarCafetera();
         System.out.println(c1.getCantidadActual());
         System.out.println(c1.getCapacidadMaxima());
@@ -21,7 +21,11 @@ public class TestCafetera {
         c1.servirTaza(80);
         System.out.println("Cantidad Actual: "+c1.getCantidadActual());
         System.out.println("Capacidad Maxima: "+c1.getCapacidadMaxima());
-        c1.servirTaza(20);
-       System.out.println("Cantidad Actual: "+c1.getCantidadActual());
+        c1.llenarCafetera();
+        c1.servirTaza(40);
+        System.out.println(c1);
+        c1.agregarCafe(20);
+        System.out.println("Capacidad Maxima: "+c1.getCapacidadMaxima());
+        System.out.println("Cantidad Actual: "+c1.getCantidadActual());
     }
 }
