@@ -10,7 +10,7 @@ package daw.poo;
  */
 public class Empleado {
 
-    //Attributos
+   //Attributos
     private String nombre, apellidos, nif;
     private double sueldoBase, pagoHorasExtras, horasExtraMes;//horasExtra entre 10 y 25
     private int IRPF, numeroHijos;//condicion
@@ -138,10 +138,10 @@ public class Empleado {
     }
 
     public double CalculoIRPF() {
-        double irpf = 0;
+        double irpf = this.getIRPF();
         //
         if (this.getNumeroHijos() > 0) {
-            irpf = (this.getIRPF() - this.getNumeroHijos());
+            irpf -=this.getNumeroHijos();
         } else if (this.isCasado()) {
             irpf -= 2;
         }

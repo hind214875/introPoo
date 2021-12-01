@@ -40,6 +40,7 @@ public class Cafetera {
     public void servirTaza(double cantidadAServir){
         if(cantidadAServir>this.cantidadActual){
             cantidadAServir=this.cantidadActual;
+            this.cantidadActual=0;
         }else{
             this.cantidadActual-=cantidadAServir;
         }
@@ -55,4 +56,30 @@ public class Cafetera {
             throw new IllegalArgumentException("no se puede");
         }
     }
+    
+    //getters and setters
+
+    public double getCapacidadMaxima() {
+        return capacidadMaxima;
+    }
+
+    public void setCapacidadMaxima(double capacidadMaxima) {
+        this.capacidadMaxima = capacidadMaxima;
+    }
+
+    public double getCantidadActual() {
+        return cantidadActual;
+    }
+
+    public void setCantidadActual(double cantidadActual) {
+        this.cantidadActual = cantidadActual;
+    }
+    
+    //toString
+
+    @Override
+    public String toString() {
+        return  "capacidadMaxima de Cafeteria es: " + capacidadMaxima + "y cantidadActual es: " + cantidadActual ;
+    }
+    
 }
